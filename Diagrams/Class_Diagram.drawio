@@ -1,0 +1,64 @@
+<mxfile host="app.diagrams.net" version="24.5.1">
+  <diagram name="Class Diagram" id="class-diagram">
+    <mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" pageWidth="1654" pageHeight="1169">
+      <root>
+        <mxCell id="0" /><mxCell id="1" parent="0" />
+        <!-- DataAnalyser -->
+        <mxCell id="da" value="DataAnalyser" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" vertex="1" parent="1"><mxGeometry x="40" y="40" width="230" height="150" as="geometry" /></mxCell>
+        <mxCell id="da_a" value="+ tiffs : list&#xa;+ bands : list&#xa;+ pixel_size_x : float&#xa;+ pixel_size_y : float&#xa;+ total_bounds : tuple" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;fontSize=10;" vertex="1" parent="da"><mxGeometry y="26" width="230" height="60" as="geometry" /></mxCell>
+        <mxCell id="da_sep" value="" style="line;strokeColor=#6c8ebf;" vertex="1" parent="da"><mxGeometry y="86" width="230" height="10" as="geometry" /></mxCell>
+        <mxCell id="da_m" value="+ isCompatible() : bool&#xa;+ calcNormalizationBounds()&#xa;+ get_pixel_size_meters() : float&#xa;+ getTotalBounds() : tuple" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;fontSize=10;" vertex="1" parent="da"><mxGeometry y="96" width="230" height="54" as="geometry" /></mxCell>
+        <!-- ExecutionPlanner -->
+        <mxCell id="ep" value="ExecutionPlanner" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" vertex="1" parent="1"><mxGeometry x="330" y="40" width="230" height="150" as="geometry" /></mxCell>
+        <mxCell id="ep_a" value="+ region_size : list&#xa;+ current_region : tuple&#xa;+ pixel_offset : list" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;fontSize=10;" vertex="1" parent="ep"><mxGeometry y="26" width="230" height="40" as="geometry" /></mxCell>
+        <mxCell id="ep_sep" value="" style="line;strokeColor=#6c8ebf;" vertex="1" parent="ep"><mxGeometry y="66" width="230" height="10" as="geometry" /></mxCell>
+        <mxCell id="ep_m" value="+ move_to_next_region() : bool&#xa;+ get_plan(tileSize, tileStep) : list&#xa;+ get_num_regions() : int&#xa;+ get_geotransform() : tuple" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;fontSize=10;" vertex="1" parent="ep"><mxGeometry y="76" width="230" height="60" as="geometry" /></mxCell>
+        <!-- DataLoaderCached -->
+        <mxCell id="dlc" value="DataLoaderCached" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#ffe6cc;strokeColor=#d6b656;fontSize=12;" vertex="1" parent="1"><mxGeometry x="620" y="40" width="230" height="150" as="geometry" /></mxCell>
+        <mxCell id="dlc_a" value="+ image_cache : ndarray&#xa;+ plan : dict&#xa;+ batch_size : int&#xa;+ lclu_path : str" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;fontSize=10;" vertex="1" parent="dlc"><mxGeometry y="26" width="230" height="50" as="geometry" /></mxCell>
+        <mxCell id="dlc_sep" value="" style="line;strokeColor=#d6b656;" vertex="1" parent="dlc"><mxGeometry y="76" width="230" height="10" as="geometry" /></mxCell>
+        <mxCell id="dlc_m" value="+ get_batch() : tuple&#xa;+ is_compatible(plan) : bool&#xa;+ set_plan(plan)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;fontSize=10;" vertex="1" parent="dlc"><mxGeometry y="86" width="230" height="50" as="geometry" /></mxCell>
+        <!-- PostprocHandler -->
+        <mxCell id="pph" value="PostprocHandler" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=12;" vertex="1" parent="1"><mxGeometry x="910" y="40" width="230" height="170" as="geometry" /></mxCell>
+        <mxCell id="pph_a" value="+ shm_instances : SharedMemory&#xa;+ shm_weights : SharedMemory&#xa;+ id_mapper : IncrementalFastMapper&#xa;+ workers : list" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;fontSize=10;" vertex="1" parent="pph"><mxGeometry y="26" width="230" height="60" as="geometry" /></mxCell>
+        <mxCell id="pph_sep" value="" style="line;strokeColor=#9673a6;" vertex="1" parent="pph"><mxGeometry y="86" width="230" height="10" as="geometry" /></mxCell>
+        <mxCell id="pph_m" value="+ put(args)&#xa;+ sync()&#xa;+ map()&#xa;+ polygonize(geotransform, layer_info)&#xa;+ dispose()" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;fontSize=10;" vertex="1" parent="pph"><mxGeometry y="96" width="230" height="74" as="geometry" /></mxCell>
+        <!-- IncrementalFastMapper -->
+        <mxCell id="ifm" value="IncrementalFastMapper" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;" vertex="1" parent="1"><mxGeometry x="910" y="280" width="230" height="130" as="geometry" /></mxCell>
+        <mxCell id="ifm_a" value="+ parent : ndarray&#xa;+ dirty : set" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;fontSize=10;" vertex="1" parent="ifm"><mxGeometry y="26" width="230" height="30" as="geometry" /></mxCell>
+        <mxCell id="ifm_sep" value="" style="line;strokeColor=#d6b656;" vertex="1" parent="ifm"><mxGeometry y="56" width="230" height="10" as="geometry" /></mxCell>
+        <mxCell id="ifm_m" value="+ find(x) : int&#xa;+ union(ids)&#xa;+ finalize() : ndarray" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;fontSize=10;" vertex="1" parent="ifm"><mxGeometry y="66" width="230" height="50" as="geometry" /></mxCell>
+        <!-- UnitedWorker -->
+        <mxCell id="uw" value="UnitedWorker" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" vertex="1" parent="1"><mxGeometry x="620" y="280" width="230" height="130" as="geometry" /></mxCell>
+        <mxCell id="uw_a" value="+ worker_id : int&#xa;+ input_queue : Queue&#xa;+ result_queue : Queue" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;fontSize=10;" vertex="1" parent="uw"><mxGeometry y="26" width="230" height="40" as="geometry" /></mxCell>
+        <mxCell id="uw_sep" value="" style="line;strokeColor=#82b366;" vertex="1" parent="uw"><mxGeometry y="66" width="230" height="10" as="geometry" /></mxCell>
+        <mxCell id="uw_m" value="+ run()" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;fontSize=10;" vertex="1" parent="uw"><mxGeometry y="76" width="230" height="40" as="geometry" /></mxCell>
+        <!-- PostprocWorker -->
+        <mxCell id="ppw" value="PostprocWorker" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" vertex="1" parent="1"><mxGeometry x="330" y="280" width="240" height="130" as="geometry" /></mxCell>
+        <mxCell id="ppw_sep" value="" style="line;strokeColor=#82b366;" vertex="1" parent="ppw"><mxGeometry y="26" width="240" height="10" as="geometry" /></mxCell>
+        <mxCell id="ppw_m" value="+ first_wave_postprocessing() [static]&#xa;+ process_fields() [static]&#xa;+ find_edge_mapping() [static]&#xa;+ get_biggest_component() [static]" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;fontSize=10;" vertex="1" parent="ppw"><mxGeometry y="36" width="240" height="80" as="geometry" /></mxCell>
+        <!-- PolygonizationWorker -->
+        <mxCell id="polyw" value="PolygonizationWorker" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#f5f5f5;strokeColor=#666666;fontSize=12;" vertex="1" parent="1"><mxGeometry x="40" y="280" width="240" height="110" as="geometry" /></mxCell>
+        <mxCell id="polyw_sep" value="" style="line;strokeColor=#666666;" vertex="1" parent="polyw"><mxGeometry y="26" width="240" height="10" as="geometry" /></mxCell>
+        <mxCell id="polyw_m" value="+ polygonize() [static]&#xa;+ remove_holes() [static]" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;fontSize=10;" vertex="1" parent="polyw"><mxGeometry y="36" width="240" height="40" as="geometry" /></mxCell>
+        <!-- MergeProcessor -->
+        <mxCell id="mp" value="MergeProcessor" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;" vertex="1" parent="1"><mxGeometry x="40" y="500" width="250" height="160" as="geometry" /></mxCell>
+        <mxCell id="mp_a" value="+ da_gdf : GeoDataFrame&#xa;+ sam_gdf : GeoDataFrame&#xa;+ raster_src : DatasetReader&#xa;+ iou_threshold : float" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;fontSize=10;" vertex="1" parent="mp"><mxGeometry y="26" width="250" height="60" as="geometry" /></mxCell>
+        <mxCell id="mp_sep" value="" style="line;strokeColor=#b85450;" vertex="1" parent="mp"><mxGeometry y="86" width="250" height="10" as="geometry" /></mxCell>
+        <mxCell id="mp_m" value="+ compute_cv(geom) : float&#xa;+ find_overlaps() : DataFrame&#xa;+ union_find_groups() : dict&#xa;+ select_best() : GeoDataFrame" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;fontSize=10;" vertex="1" parent="mp"><mxGeometry y="96" width="250" height="64" as="geometry" /></mxCell>
+        <!-- GapCloser -->
+        <mxCell id="gc" value="GapCloser" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;" vertex="1" parent="1"><mxGeometry x="350" y="500" width="250" height="160" as="geometry" /></mxCell>
+        <mxCell id="gc_a" value="+ merged_gdf : GeoDataFrame&#xa;+ raster_path : str&#xa;+ batch_size : int" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;fontSize=10;" vertex="1" parent="gc"><mxGeometry y="26" width="250" height="50" as="geometry" /></mxCell>
+        <mxCell id="gc_sep" value="" style="line;strokeColor=#b85450;" vertex="1" parent="gc"><mxGeometry y="76" width="250" height="10" as="geometry" /></mxCell>
+        <mxCell id="gc_m" value="+ run_watershed()&#xa;+ process_spatial_batch(bounds)&#xa;+ close_gaps() : GeoDataFrame" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;fontSize=10;" vertex="1" parent="gc"><mxGeometry y="86" width="250" height="60" as="geometry" /></mxCell>
+        <!-- Relationships -->
+        <mxCell id="rel1" value="uses bounds/scale" style="endArrow=open;endFill=0;dashed=1;fontSize=10;" edge="1" parent="1" source="ep" target="da"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="rel2" value="owns" style="endArrow=diamond;endFill=1;fontSize=10;" edge="1" parent="1" source="pph" target="ifm"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="rel3" value="manages N" style="endArrow=diamond;endFill=1;fontSize=10;" edge="1" parent="1" source="pph" target="uw"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="rel4" value="delegates postproc" style="endArrow=open;endFill=0;fontSize=10;" edge="1" parent="1" source="uw" target="ppw"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="rel5" value="delegates vectorize" style="endArrow=open;endFill=0;fontSize=10;" edge="1" parent="1" source="uw" target="polyw"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="rel6" value="consumes output" style="endArrow=open;endFill=0;fontSize=10;" edge="1" parent="1" source="gc" target="mp"><mxGeometry relative="1" as="geometry" /></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

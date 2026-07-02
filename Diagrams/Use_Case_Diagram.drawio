@@ -1,0 +1,56 @@
+<mxfile host="app.diagrams.net" version="24.5.1">
+  <diagram name="Use Case Diagram" id="usecase-diagram">
+    <mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" pageWidth="1654" pageHeight="1169">
+      <root>
+        <mxCell id="0" /><mxCell id="1" parent="0" />
+        <!-- System boundary -->
+        <mxCell id="sys" value="AI Agricultural Land Segmentation System" style="swimlane;startSize=30;fontStyle=1;fontSize=13;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="200" y="40" width="700" height="680" as="geometry" />
+        </mxCell>
+        <!-- Use cases inside system -->
+        <mxCell id="uc1" value="Configure YAML Parameters" style="ellipse;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="sys"><mxGeometry x="60" y="60" width="200" height="50" as="geometry" /></mxCell>
+        <mxCell id="uc2" value="Run Delineate Anything Inference" style="ellipse;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="sys"><mxGeometry x="60" y="140" width="200" height="50" as="geometry" /></mxCell>
+        <mxCell id="uc3" value="Run SAM Inference" style="ellipse;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="sys"><mxGeometry x="60" y="220" width="200" height="50" as="geometry" /></mxCell>
+        <mxCell id="uc4" value="Execute CV-Based Polygon Merging" style="ellipse;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="sys"><mxGeometry x="60" y="300" width="200" height="50" as="geometry" /></mxCell>
+        <mxCell id="uc5" value="Execute Watershed Gap Closing" style="ellipse;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="sys"><mxGeometry x="60" y="380" width="200" height="50" as="geometry" /></mxCell>
+        <mxCell id="uc6" value="Download Model Weights" style="ellipse;fillColor=#ffe6cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="sys"><mxGeometry x="60" y="460" width="200" height="50" as="geometry" /></mxCell>
+        <mxCell id="uc7" value="Load Merged GeoPackage in QGIS" style="ellipse;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" vertex="1" parent="sys"><mxGeometry x="420" y="60" width="220" height="50" as="geometry" /></mxCell>
+        <mxCell id="uc8" value="Inspect Polygon Boundaries" style="ellipse;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" vertex="1" parent="sys"><mxGeometry x="420" y="140" width="220" height="50" as="geometry" /></mxCell>
+        <mxCell id="uc9" value="Validate CRS and Spatial Alignment" style="ellipse;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" vertex="1" parent="sys"><mxGeometry x="420" y="220" width="220" height="50" as="geometry" /></mxCell>
+        <mxCell id="uc10" value="Export Boundaries to GIS Formats" style="ellipse;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" vertex="1" parent="sys"><mxGeometry x="420" y="300" width="220" height="50" as="geometry" /></mxCell>
+        <mxCell id="uc11" value="Review Merge Statistics" style="ellipse;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" vertex="1" parent="sys"><mxGeometry x="420" y="380" width="220" height="50" as="geometry" /></mxCell>
+        <!-- Actors -->
+        <mxCell id="op" value="Operator" style="shape=mxgraph.flowchart.actor;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="280" width="50" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="ga" value="GIS Analyst" style="shape=mxgraph.flowchart.actor;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="970" y="280" width="50" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="hf" value="HuggingFace Hub" style="shape=mxgraph.flowchart.actor;fillColor=#ffe6cc;strokeColor=#d6b656;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="550" width="50" height="70" as="geometry" />
+        </mxCell>
+        <!-- Edges: Operator to use cases -->
+        <mxCell id="e1" value="" style="endArrow=open;endFill=0;" edge="1" parent="1" source="op" target="uc1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e2" value="" style="endArrow=open;endFill=0;" edge="1" parent="1" source="op" target="uc2"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e3" value="" style="endArrow=open;endFill=0;" edge="1" parent="1" source="op" target="uc3"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e4" value="" style="endArrow=open;endFill=0;" edge="1" parent="1" source="op" target="uc4"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e5" value="" style="endArrow=open;endFill=0;" edge="1" parent="1" source="op" target="uc5"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <!-- Edges: GIS Analyst to use cases -->
+        <mxCell id="e7" value="" style="endArrow=open;endFill=0;" edge="1" parent="1" source="ga" target="uc7"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e8" value="" style="endArrow=open;endFill=0;" edge="1" parent="1" source="ga" target="uc8"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e9" value="" style="endArrow=open;endFill=0;" edge="1" parent="1" source="ga" target="uc9"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e10" value="" style="endArrow=open;endFill=0;" edge="1" parent="1" source="ga" target="uc10"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e11" value="" style="endArrow=open;endFill=0;" edge="1" parent="1" source="ga" target="uc11"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <!-- HuggingFace -->
+        <mxCell id="e6" value="" style="endArrow=open;endFill=0;" edge="1" parent="1" source="hf" target="uc6"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <!-- Include relationships -->
+        <mxCell id="inc1" value="&lt;&lt;include&gt;&gt;" style="endArrow=open;endFill=0;dashed=1;fontSize=10;" edge="1" parent="1" source="uc2" target="uc6"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="inc2" value="&lt;&lt;include&gt;&gt;" style="endArrow=open;endFill=0;dashed=1;fontSize=10;" edge="1" parent="1" source="uc3" target="uc6"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="inc3" value="&lt;&lt;depends on&gt;&gt;" style="endArrow=open;endFill=0;dashed=1;fontSize=10;" edge="1" parent="1" source="uc4" target="uc2"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="inc4" value="&lt;&lt;depends on&gt;&gt;" style="endArrow=open;endFill=0;dashed=1;fontSize=10;" edge="1" parent="1" source="uc4" target="uc3"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="inc5" value="&lt;&lt;depends on&gt;&gt;" style="endArrow=open;endFill=0;dashed=1;fontSize=10;" edge="1" parent="1" source="uc5" target="uc4"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="inc6" value="&lt;&lt;depends on&gt;&gt;" style="endArrow=open;endFill=0;dashed=1;fontSize=10;" edge="1" parent="1" source="uc7" target="uc5"><mxGeometry relative="1" as="geometry" /></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

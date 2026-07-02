@@ -15,14 +15,24 @@ class PostprocWorker:
         filter_mask = nodata[1, :, :]
 
         for result in model_results:
-            if result.masks is None or len(result.masks) == 0:
+            if result is None:
                 continue
 
-            dnp = result.masks.data.cpu().numpy().astype("uint8")
-            for j in range(dnp.shape[0]):
-                l_bbox = result.boxes[j].xyxy.cpu()
+            # Support both lightweight numpy dicts and original YOLO Result objects
+            if isinstance(result, dict):
+                dnp = result["masks_data"]
+                boxes_xyxy = result["boxes_xyxy"]
+            else:
+                dnp = result.masks.data.cpu().numpy().astype("uint8")
+                boxes_xyxy = result.boxes.xyxy.cpu().numpy()
 
-                min_x, min_y, max_x, max_y = (int(l_bbox[0][0]), int(l_bbox[0][1]), int(ceil(l_bbox[0][2])), int(ceil(l_bbox[0][3])))
+            if dnp is None or len(dnp) == 0:
+                continue
+
+            for j in range(dnp.shape[0]):
+                l_bbox = boxes_xyxy[j]
+
+                min_x, min_y, max_x, max_y = (int(l_bbox[0]), int(l_bbox[1]), int(ceil(l_bbox[2])), int(ceil(l_bbox[3])))
                 min_x = max(0, min_x - 4)
                 min_y = max(0, min_y - 4)
                 max_x = min(512, max_x + 4)
@@ -169,7 +179,8 @@ class PostprocWorker:
         instances[:, -MERGING_EDGE_WIDTH:] |= 1
 
         inregion_bx, inregion_by, inregion_width, inregion_height = entry["bounds"]["inregion"]
-        instances = cv2.resize(instances, (inregion_height, inregion_width))
+        instances = cv2.resize(instances.astype("float32"), (inregion_height, inregion_width), interpolation=cv2.INTER_NEAREST).astype("int32")
+        weights = cv2.resize(weights, (inregion_height, inregion_width), interpolation=cv2.INTER_NEAREST)
 
         posX_begin = max(0, inregion_bx)
         posX_end = min(instances_info[1][1], inregion_bx + inregion_width)

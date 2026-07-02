@@ -1,0 +1,151 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="ER Diagram" id="er-diagram">
+    <mxGraphModel dx="1212" dy="661" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="sat" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" value="SATELLITE_IMAGE" vertex="1">
+          <mxGeometry height="146" width="220" x="40" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="sat1" parent="sat" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" value="image_id : INT (PK)" vertex="1">
+          <mxGeometry height="20" width="220" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="sat2" parent="sat" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" value="file_path : VARCHAR" vertex="1">
+          <mxGeometry height="20" width="220" y="46" as="geometry" />
+        </mxCell>
+        <mxCell id="sat3" parent="sat" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" value="crs : VARCHAR" vertex="1">
+          <mxGeometry height="20" width="220" y="66" as="geometry" />
+        </mxCell>
+        <mxCell id="sat4" parent="sat" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" value="pixel_size_x : FLOAT" vertex="1">
+          <mxGeometry height="20" width="220" y="86" as="geometry" />
+        </mxCell>
+        <mxCell id="sat5" parent="sat" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" value="pixel_size_y : FLOAT" vertex="1">
+          <mxGeometry height="20" width="220" y="106" as="geometry" />
+        </mxCell>
+        <mxCell id="sat6" parent="sat" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" value="band_count : INT" vertex="1">
+          <mxGeometry height="20" width="220" y="126" as="geometry" />
+        </mxCell>
+        <mxCell id="reg" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" value="PROCESSING_REGION" vertex="1">
+          <mxGeometry height="146" width="220" x="400" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="reg1" parent="reg" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" value="region_id : INT (PK)" vertex="1">
+          <mxGeometry height="20" width="220" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="reg2" parent="reg" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" value="image_id : INT (FK)" vertex="1">
+          <mxGeometry height="20" width="220" y="46" as="geometry" />
+        </mxCell>
+        <mxCell id="reg3" parent="reg" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" value="origin_x : INT" vertex="1">
+          <mxGeometry height="20" width="220" y="66" as="geometry" />
+        </mxCell>
+        <mxCell id="reg4" parent="reg" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" value="origin_y : INT" vertex="1">
+          <mxGeometry height="20" width="220" y="86" as="geometry" />
+        </mxCell>
+        <mxCell id="reg5" parent="reg" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" value="width_px : INT" vertex="1">
+          <mxGeometry height="20" width="220" y="106" as="geometry" />
+        </mxCell>
+        <mxCell id="reg6" parent="reg" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" value="height_px : INT" vertex="1">
+          <mxGeometry height="20" width="220" y="126" as="geometry" />
+        </mxCell>
+        <mxCell id="da" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#ffe6cc;strokeColor=#d6b656;fontSize=12;" value="DA_POLYGON" vertex="1">
+          <mxGeometry height="146" width="220" x="40" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="da1" parent="da" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" value="fid : INT (PK)" vertex="1">
+          <mxGeometry height="20" width="220" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="da2" parent="da" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" value="region_id : INT (FK)" vertex="1">
+          <mxGeometry height="20" width="220" y="46" as="geometry" />
+        </mxCell>
+        <mxCell id="da3" parent="da" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" value="geom : POLYGON" vertex="1">
+          <mxGeometry height="20" width="220" y="66" as="geometry" />
+        </mxCell>
+        <mxCell id="da4" parent="da" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" value="field_id : INT" vertex="1">
+          <mxGeometry height="20" width="220" y="86" as="geometry" />
+        </mxCell>
+        <mxCell id="da5" parent="da" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" value="bg : BOOLEAN" vertex="1">
+          <mxGeometry height="20" width="220" y="106" as="geometry" />
+        </mxCell>
+        <mxCell id="da6" parent="da" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" value="area_m2 : FLOAT" vertex="1">
+          <mxGeometry height="20" width="220" y="126" as="geometry" />
+        </mxCell>
+        <mxCell id="sam" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=12;" value="SAM_POLYGON" vertex="1">
+          <mxGeometry height="126" width="220" x="400" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="sam1" parent="sam" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" value="fid : INT (PK)" vertex="1">
+          <mxGeometry height="20" width="220" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="sam2" parent="sam" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" value="region_id : INT (FK)" vertex="1">
+          <mxGeometry height="20" width="220" y="46" as="geometry" />
+        </mxCell>
+        <mxCell id="sam3" parent="sam" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" value="geom : POLYGON" vertex="1">
+          <mxGeometry height="20" width="220" y="66" as="geometry" />
+        </mxCell>
+        <mxCell id="sam4" parent="sam" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" value="source : TEXT" vertex="1">
+          <mxGeometry height="20" width="220" y="86" as="geometry" />
+        </mxCell>
+        <mxCell id="sam5" parent="sam" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" value="area_m2 : FLOAT" vertex="1">
+          <mxGeometry height="20" width="220" y="106" as="geometry" />
+        </mxCell>
+        <mxCell id="sqs" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;" value="SPECTRAL_QUALITY_SCORE" vertex="1">
+          <mxGeometry height="146" width="240" x="200" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="sqs1" parent="sqs" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" value="score_id : INT (PK)" vertex="1">
+          <mxGeometry height="20" width="240" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="sqs2" parent="sqs" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" value="da_fid : INT (FK)" vertex="1">
+          <mxGeometry height="20" width="240" y="46" as="geometry" />
+        </mxCell>
+        <mxCell id="sqs3" parent="sqs" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" value="sam_fid : INT (FK)" vertex="1">
+          <mxGeometry height="20" width="240" y="66" as="geometry" />
+        </mxCell>
+        <mxCell id="sqs4" parent="sqs" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" value="da_cv : FLOAT" vertex="1">
+          <mxGeometry height="20" width="240" y="86" as="geometry" />
+        </mxCell>
+        <mxCell id="sqs5" parent="sqs" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" value="sam_cv : FLOAT" vertex="1">
+          <mxGeometry height="20" width="240" y="106" as="geometry" />
+        </mxCell>
+        <mxCell id="sqs6" parent="sqs" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" value="winner : TEXT" vertex="1">
+          <mxGeometry height="20" width="240" y="126" as="geometry" />
+        </mxCell>
+        <mxCell id="mgd" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;" value="MERGED_POLYGON" vertex="1">
+          <mxGeometry height="146" width="240" x="200" y="820" as="geometry" />
+        </mxCell>
+        <mxCell id="mgd1" parent="mgd" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" value="fid : INT (PK)" vertex="1">
+          <mxGeometry height="20" width="240" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="mgd2" parent="mgd" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" value="score_id : INT (FK)" vertex="1">
+          <mxGeometry height="20" width="240" y="46" as="geometry" />
+        </mxCell>
+        <mxCell id="mgd3" parent="mgd" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" value="geom : POLYGON" vertex="1">
+          <mxGeometry height="20" width="240" y="66" as="geometry" />
+        </mxCell>
+        <mxCell id="mgd4" parent="mgd" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" value="source : TEXT" vertex="1">
+          <mxGeometry height="20" width="240" y="86" as="geometry" />
+        </mxCell>
+        <mxCell id="mgd5" parent="mgd" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" value="cv_score : FLOAT" vertex="1">
+          <mxGeometry height="20" width="240" y="106" as="geometry" />
+        </mxCell>
+        <mxCell id="mgd6" parent="mgd" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" value="area_m2 : FLOAT" vertex="1">
+          <mxGeometry height="20" width="240" y="126" as="geometry" />
+        </mxCell>
+        <mxCell id="r1" edge="1" parent="1" source="sat" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;endFill=0;fontSize=10;fontStyle=1;" target="reg" value="1 : N  divided into">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r2" edge="1" parent="1" source="reg" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;endFill=0;fontSize=10;fontStyle=1;" target="da" value="1 : N  produces">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r3" edge="1" parent="1" source="reg" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;endFill=0;fontSize=10;fontStyle=1;" target="sam" value="1 : N  produces">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r4" edge="1" parent="1" source="da" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;endFill=0;fontSize=10;fontStyle=1;" target="sqs" value="1:1  evaluated in">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r5" edge="1" parent="1" source="sam" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;endFill=0;fontSize=10;fontStyle=1;" target="sqs" value="1:1  evaluated in">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r6" edge="1" parent="1" source="sqs" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;endFill=0;fontSize=10;fontStyle=1;" target="mgd" value="1:1  selects winner">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

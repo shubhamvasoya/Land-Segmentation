@@ -1,0 +1,31 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Activity Diagram" id="activity-diagram">
+    <mxGraphModel dx="1030" dy="562" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="EBD2ffmaC9dslY5hxBqS-0" />
+        <mxCell id="EBD2ffmaC9dslY5hxBqS-1" parent="EBD2ffmaC9dslY5hxBqS-0" />
+        <mxCell id="EWUk5z5ZJIsMHtBLY19R-90" edge="1" parent="EBD2ffmaC9dslY5hxBqS-1" source="EWUk5z5ZJIsMHtBLY19R-84" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=17;" target="EWUk5z5ZJIsMHtBLY19R-85">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="EWUk5z5ZJIsMHtBLY19R-84" parent="EBD2ffmaC9dslY5hxBqS-1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=17;" value="&lt;font&gt;&lt;b&gt;Input Layer&amp;nbsp;&lt;/b&gt;&lt;/font&gt;&lt;div&gt;&lt;font&gt;&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font&gt;&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font&gt;GeoTIFF Images&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font&gt;YAML Configs&lt;/font&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="160" width="160" x="480" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="EWUk5z5ZJIsMHtBLY19R-91" edge="1" parent="EBD2ffmaC9dslY5hxBqS-1" source="EWUk5z5ZJIsMHtBLY19R-85" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=17;" target="EWUk5z5ZJIsMHtBLY19R-87">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="EWUk5z5ZJIsMHtBLY19R-85" parent="EBD2ffmaC9dslY5hxBqS-1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=17;" value="&lt;span&gt;&lt;b&gt;Inference Layer&lt;/b&gt;&lt;/span&gt;&lt;div&gt;&lt;span&gt;&lt;br&gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;br&gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span&gt;Delineate Anything&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span&gt;(YOLO + Tiling + Polygonization)&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;br&gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span&gt;SAM Pipeline&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span&gt;(Grid Prompting + Mask-&amp;gt;&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&amp;nbsp;Vector)&lt;/span&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="280" width="280" x="720" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="EWUk5z5ZJIsMHtBLY19R-92" edge="1" parent="EBD2ffmaC9dslY5hxBqS-1" source="EWUk5z5ZJIsMHtBLY19R-87" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=17;" target="EWUk5z5ZJIsMHtBLY19R-88">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="EWUk5z5ZJIsMHtBLY19R-87" parent="EBD2ffmaC9dslY5hxBqS-1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=17;" value="&lt;span&gt;&lt;b&gt;Merging and Refining&lt;/b&gt;&lt;/span&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;font&gt;CV-Based Overlap Comparision&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font&gt;(Union-Find Groups)&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font&gt;&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font&gt;Watershed Gap Closing&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font&gt;&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font&gt;Chaikin Smoothing&lt;/font&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="280" width="270" x="1090" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="EWUk5z5ZJIsMHtBLY19R-88" parent="EBD2ffmaC9dslY5hxBqS-1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=17;" value="&lt;font&gt;&lt;b&gt;Output Layer&amp;nbsp;&lt;/b&gt;&lt;/font&gt;&lt;div&gt;&lt;font&gt;&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font&gt;&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font&gt;Merged Geopackage (.gpkg) -&amp;gt; QGIS&lt;br&gt;&lt;/font&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="160" width="190" x="1440" y="280" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

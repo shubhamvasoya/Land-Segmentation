@@ -1,0 +1,88 @@
+model: ["large"]
+method: main
+
+execution_args:
+  src_folder: ""
+  temp_folder: ""
+  output_path: ""
+  keep_temp: false
+  mask_filepath: null
+
+super_resolution: 1
+treat_as_vrt: false
+
+mask_info:
+  range: 24
+  filter_classes: [1,10,11,12,23]
+  clip_classes: [0,13,14]
+
+background_info:
+  background_classes_from_mask: []
+  additional_source: null
+
+data_loader:
+  skip: False
+  bands: [2, 3, 4]          # Band1=NIR, Band2=Red, Band3=Green, Band4=Blue → RGB
+  nodata_band: null
+  nodata_value: [0,0,0]
+  min: null
+  max: null
+
+execution_planner:
+  region_width: 4096
+  region_height: 4096
+  pixel_offset: [-1,-1]
+
+postprocess_limits:
+  num_workers: [1,1]
+  queue_tiles_capacity: 4
+  max_tiles_inflight: 4
+
+passes:
+  - batch_size: 1
+    tile_size: 512
+    tile_step: 0.75
+
+    model_args:
+      - name: large
+        minimal_confidence: 0.001
+        use_half: false       # FP16 broken on GTX 1650, must use FP32
+
+    delineation_config:
+
+      pixel_area_threshold: 64
+      remaining_area_threshold: 0.5
+      compose_merge_iou: 0.45
+
+      merge_iou: 0.45
+      merge_relative_area_threshold: 0.3
+
+      merge_asymetric_pixel_area_threshold: 16
+      merge_asymetric_relative_area_threshold: 0.6
+
+      merging_edge_width: 32
+      merge_edge_iou: 0.35
+      merge_edge_pixels: 384
+
+polygonization_args:
+  layer_name: fields
+  override_if_exists: true
+
+filtering_args:
+  minimum_area_m2: 500        # Remove polygons smaller than this (m²) — kills tiny slivers
+  minimum_part_area_m2: 0
+  minimum_hole_area_m2: 500
+  buffer_distance_m: -1.5    # Negative buffer to shrink polygons and create gaps (meters)
+
+  minimum_background_field_area_m2: 50000
+  minimum_background_field_hole_area_m2: 25000
+
+  middleground_offset: null
+  minimum_middleground_field_area_m2: 10000
+  minimum_middleground_field_hole_area_m2: 5000
+
+simplification_args:
+  simplify: True
+  epsilon_scale: 2
+  num_workers: -1
+  raster_resolution: [8060,8382]

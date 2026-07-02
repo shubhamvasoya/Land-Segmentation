@@ -101,6 +101,13 @@ def execute(model_paths, config, verbose):
 
     postdelineation_merge((gpkg_path, layer_name), config["filtering_args"])
 
+    buffer_distance = config["filtering_args"].get("buffer_distance_m", None)
+    if buffer_distance is not None and buffer_distance != 0:
+        start = time.time()
+        logger.info(f"Applying polygon buffer ({buffer_distance}m)...")
+        postdelineation_buffer((gpkg_path, layer_name), buffer_distance, config["filtering_args"]["minimum_area_m2"])
+        logger.info(f"Buffer applied in {time.time() - start:.2f} seconds.")
+
     if not keep_temp:
         folder_content = os.listdir(temp_folder)
         for file in folder_content:
@@ -228,8 +235,25 @@ def execute_delineation(models, planner, postproc_config, passes, dataloader_con
                                     if result[i].masks is not None:
                                         global_field_counter += field_counter_increment * len(result[i].masks)
 
-                            args = ([results[i].cpu() for results in model_results], nodata_batch[i], bounds_batch[i], id_counter)
+                            # Convert torch tensors to lightweight numpy before queuing
+                            # to avoid Windows shared file mapping exhaustion (error 1455)
+                            lightweight_results = []
+                            for results in model_results:
+                                r = results[i]
+                                if r.masks is not None and r.masks.data.shape[0] > 0:
+                                    lightweight_results.append({
+                                        "masks_data": r.masks.data.cpu().numpy().astype("uint8"),
+                                        "boxes_xyxy": r.boxes.xyxy.cpu().numpy()
+                                    })
+                                else:
+                                    lightweight_results.append(None)
+
+                            args = (lightweight_results, nodata_batch[i], bounds_batch[i], id_counter)
                             postproc_handler.put(args)
+
+                        # Free GPU memory after processing batch
+                        del model_results
+                        torch.cuda.empty_cache()
 
                     postproc_handler.sync()
 
@@ -252,6 +276,8 @@ def execute_delineation(models, planner, postproc_config, passes, dataloader_con
 
     postproc_handler.dispose()
     logger.debug(f"Total time on creating dataloader: {total_dataloader_time} s.")
+    out_layer = None
+    gpkg = None
 
 def postdelineation_merge(layer_info, filter_config):
     gpkg_path, layer_name = layer_info
@@ -347,7 +373,109 @@ def postdelineation_merge(layer_info, filter_config):
         layer.RollbackTransaction()
         raise e
     
-    gpkg.ExecuteSQL("VACUUM")
+    try:
+        gpkg.ExecuteSQL("VACUUM")
+    except Exception as e:
+        logger.warning(f"VACUUM failed during merge: {e}. Skipping database repack.")
+        
+    layer = None
+    gpkg = None
+
+def postdelineation_buffer(layer_info, buffer_distance, min_area_m2):
+    """Apply negative buffer to polygons to create gaps between adjacent fields,
+    then remove any polygons that became too small after buffering.
+    Handles both projected (meters) and geographic (degrees) CRS."""
+    gpkg_path, layer_name = layer_info
+    gpkg = ogr.Open(gpkg_path, 1)
+    layer = gpkg.GetLayerByName(layer_name)
+
+    src_srs = layer.GetSpatialRef()
+
+    # Determine if CRS is geographic (degrees) or projected (meters)
+    is_geographic = src_srs.IsGeographic()
+
+    # For geographic CRS, we need a metric CRS for buffering
+    metric_srs = osr.SpatialReference()
+    metric_srs.ImportFromEPSG(6933)  # EASE-Grid 2.0 (equal-area, meters)
+
+    if is_geographic:
+        to_metric = osr.CoordinateTransformation(src_srs, metric_srs)
+        to_original = osr.CoordinateTransformation(metric_srs, src_srs)
+        logger.info("Geographic CRS detected — transforming to metric CRS for buffer")
+    else:
+        to_metric = osr.CoordinateTransformation(src_srs, metric_srs)
+        logger.info(f"Projected CRS detected — buffering in native units (meters)")
+
+    features_to_delete = []
+    features_to_update = []
+
+    for feature in tqdm(layer, desc="Buffering", unit="poly"):
+        fid = feature.GetFID()
+        geom = feature.GetGeometryRef()
+        if geom is None or geom.IsEmpty():
+            features_to_delete.append(fid)
+            continue
+
+        if is_geographic:
+            # Transform to metric CRS, buffer, transform back
+            metric_geom = geom.Clone()
+            metric_geom.Transform(to_metric)
+            buffered_metric = metric_geom.Buffer(buffer_distance)
+
+            if buffered_metric is None or buffered_metric.IsEmpty():
+                features_to_delete.append(fid)
+                continue
+
+            area = buffered_metric.GetArea()
+
+            # Transform back to original CRS for storage
+            buffered = buffered_metric.Clone()
+            buffered.Transform(to_original)
+        else:
+            # Buffer directly in projected CRS (already in meters)
+            buffered = geom.Buffer(buffer_distance)
+
+            if buffered is None or buffered.IsEmpty():
+                features_to_delete.append(fid)
+                continue
+
+            # Transform to metric for area calculation
+            area_geom = buffered.Clone()
+            area_geom.Transform(to_metric)
+            area = area_geom.GetArea()
+
+        if area < min_area_m2:
+            features_to_delete.append(fid)
+            continue
+
+        features_to_update.append((fid, buffered.ExportToWkb(), float(area)))
+
+    try:
+        layer.StartTransaction()
+
+        for fid in tqdm(features_to_delete, desc="Removing small polys", unit="poly"):
+            layer.DeleteFeature(fid)
+
+        for fid, wkb, area in tqdm(features_to_update, desc="Updating polys", unit="poly"):
+            feature = layer.GetFeature(fid)
+            new_geom = ogr.CreateGeometryFromWkb(wkb)
+            feature.SetGeometry(new_geom)
+            feature.SetField("area", area)
+            layer.SetFeature(feature)
+
+        layer.CommitTransaction()
+    except Exception as e:
+        layer.RollbackTransaction()
+        raise e
+
+    try:
+        gpkg.ExecuteSQL("VACUUM")
+    except Exception as e:
+        logger.warning(f"VACUUM failed during buffer: {e}. Skipping database repack.")
+    logger.info(f"Buffer: kept {len(features_to_update)} polygons, removed {len(features_to_delete)} small/empty polygons")
+    
+    layer = None
+    gpkg = None
 
 def warp_lclu(src, dst, sample_tiff, total_bounds, pixel_size, warp_options):
     temp_lclu_tiff_path = None

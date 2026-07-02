@@ -1,0 +1,13 @@
+base_config: conf_gujarat.yaml
+
+data_root: data/images
+output_root: data/delineated
+temp_root: data/temp
+keep_temp: false
+mask_root: data/masks
+
+include:
+  - Gujarat
+
+exclude: null
+override: null
